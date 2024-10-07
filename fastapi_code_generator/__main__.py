@@ -65,6 +65,7 @@ def main(
     python_version: PythonVersion = typer.Option(
         PythonVersion.PY_39.value, "--python-version", "-p"
     ),
+    use_annotated: bool = typer.Option(False, "--use-annotated"),
 ) -> None:
     input_name: str = input_file
     input_text: str
@@ -89,6 +90,7 @@ def main(
         specify_tags=specify_tags,
         output_model_type=output_model_type,
         python_version=python_version,
+        use_annotated=use_annotated,
     )
 
 
@@ -117,6 +119,7 @@ def generate_code(
     specify_tags: Optional[str] = None,
     output_model_type: DataModelType = DataModelType.PydanticBaseModel,
     python_version: PythonVersion = PythonVersion.PY_39,
+    use_annotated: bool = False,
 ) -> None:
     if not model_path:
         model_path = MODEL_PATH
@@ -142,6 +145,7 @@ def generate_code(
         dump_resolve_reference_action=data_model_types.dump_resolve_reference_action,
         custom_template_dir=model_template_dir,
         target_python_version=python_version,
+        use_annotated=use_annotated,
     )
 
     with chdir(output_dir):
