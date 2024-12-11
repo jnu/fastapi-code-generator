@@ -212,7 +212,16 @@ class Operation(CachedPropertyModel):
         return imports
 
     @cached_property
-    def root_path(self) -> UsefulStr:  # pragma: no cover
+    def default_status_code(self) -> int | None:
+        if not self.responses:
+            return 200
+        if len(self.responses) == 1:
+            keys = list(self.responses.keys())
+            return int(keys[0])
+        return None
+
+    @cached_property
+    def root_path(self) -> UsefulStr: # pragma: no cover
         paths = self.path.split("/")
         return UsefulStr(paths[1] if len(paths) > 1 else '')
 
